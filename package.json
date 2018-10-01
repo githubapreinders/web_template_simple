@@ -45,7 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/githubapreinders/website_apstraction.git"
+    "url": "git+https://github.com/githubapreinders/web_template_simple"
   },
   "keywords": [
     "apstraction",
@@ -55,7 +55,7 @@
   "author": "ap reinders",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/githubapreinders/website_apstraction/issues"
+    "url": "https://github.com/githubapreinders/web_template_simple"
   },
-  "homepage": "https://github.com/githubapreinders/website_apstraction#readme"
+  "homepage": "https://apstraction.nl"
 }
