@@ -12,8 +12,11 @@
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     stylish = require('jshint-stylish'),
+    stripDebug = require('gulp-strip-debug'),
+    strip = require('gulp-strip-comments');
     uglify = require('gulp-uglify'),
     useref = require('gulp-useref');
+
 
 gulp.task('default',function()
 {
@@ -62,7 +65,7 @@ gulp.task('copy_css',['compile_sass'], function()
 gulp.task('watch',['browser_Sync', 'compile_sass','js_dev'], function()
 {
     gulp.watch('app/scss/**/*.scss', ['compile_sass']);
-    gulp.watch('app/*.html', browserSync.reload);
+    gulp.watch('app/**/*.html', browserSync.reload);
     gulp.watch('app/js/**/controller.js', ['js_dev']);
 });
 
@@ -102,7 +105,7 @@ gulp.task('clean', function()
 gulp.task('copy_html', function()
 {
     return gulp.src('app/**/*.html')
-        .pipe(gulp.dest('build'))
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('copy_fonts', function()
@@ -120,5 +123,86 @@ gulp.task('copy_images', function()
 
     gulp.task('build',function(callback)
     {
-        runSequence('clean',['copy_fonts','copy_images','copy_css','js'],'browser_Sync_build',callback)
+        runSequence('clean',['copy_fonts','copy_images','copy_css','js'],'browser_Sync_build',callback);
     });
+
+
+
+/**********  BUILD TASKS **********/
+
+gulp.task('build',function(callback)
+{
+    runSequence('concatAndStash','removeDirs',['uglifyJs','handleAngular','copy_html','copy_images','copy_fonts'],'browser_Sync_build');
+});
+
+
+gulp.task('concatAndStash',['clean'], function ()
+{
+    return gulp.src('app/index.html')
+        .pipe(useref())
+        .pipe(gulpIf('*.css' , cssnano()))
+        .pipe(gulp.dest('webapp'));
+});
+
+gulp.task('removeDirs', function()
+{
+    return del(['webapp/scripts']);
+});
+
+gulp.task('minifyCss', function()
+{
+    return gulp.src('webapp/styles/main.css')
+    .pipe(cssnano());
+});
+
+gulp.task('uglifyJs', function()
+{
+    return gulp.src(['app/scripts/application.js','app/scripts/controllers.js','app/scripts/directives.js'])
+        .pipe(concat('scripts.min.js'))
+        .pipe(strip())
+        .pipe(stripDebug())
+        .pipe(sourcemaps.init())
+        .pipe(ngAnnotate())
+        .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('webapp/scripts'));
+});
+
+gulp.task('handleAngular', function()
+{
+    return gulp.src(["app/bower_components/jquery/dist/jquery.min.js","app/bower_components/angular/angular.min.js","app/bower_components/angular-ui-router/release/angular-ui-router.min.js"])
+    .pipe(gulp.dest('webapp/scripts'));
+});
+
+gulp.task('copy_html', function()
+{
+    return gulp.src(['app/views/*.html'])
+        .pipe(gulp.dest('webapp/views'));
+});
+
+gulp.task('copy_fonts', function()
+{
+    return gulp.src(['app/fonts/glyphicons-halflings-regular.woff2','app/fonts/glyphicons-halflings-regular.woff','app/fonts/fontawesome-webfont.woff','app/fonts/fontawesome-webfont.woff2','app/fonts/glyphicons-halflings-regular.ttf'])
+        .pipe(gulp.dest('webapp/fonts'));
+});
+
+gulp.task('copy_images', function()
+{
+    return gulp.src('app/media/**/*.+(png|jpg|gif|svg)')
+        .pipe(imagemin())
+        .pipe(gulp.dest('webapp/media'));
+});
+
+gulp.task('clean', function()
+{
+    return del(['tmp','webapp']);
+});   
+
+gulp.task('browser_Sync_build',function()
+{
+    browserSync.init(
+    {
+        server:{baseDir:'webapp'}
+    });
+    browserSync.reload();
+});    

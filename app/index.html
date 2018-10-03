@@ -12,8 +12,7 @@
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="styles/bootstrap-social.css" rel="stylesheet">
-    <link href="styles/mystyles.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- endbuild -->
 
 </head>
@@ -25,11 +24,20 @@
 <div ui-view="content"></div>
 <div ui-view="footer"></div>
 
-<!-- build:js scripts/main.js -->
+<!-- build:js scripts/jquery.min.js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-- endbuild -->
 
+<!-- build:js scripts/angular.min.js -->
+<script src="bower_components/angular/angular.js"></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/angular-ui-router.min.js -->
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-- endbuild -->
+
+
+<!-- build:js scripts/scripts.min.js -->
 <script src="scripts/application.js"></script>
 <script src="scripts/controllers.js"></script>
 <script src="scripts/services.js"></script>
