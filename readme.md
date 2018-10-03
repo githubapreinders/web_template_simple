@@ -3,9 +3,9 @@
 A quick way to have a basis working angular app, together with gulp synchronization and gulp build.
 
 ## Prerequisites
-..* Node installed on your machine.
-..* Bower installed on your machine. `npm install -g bower`
-..* A command line tool like Bash or Powershell
+ * Node installed on your machine.
+ * Bower installed on your machine. `npm install -g bower`
+ * A command line tool like Bash or Powershell
 
 
 ## how to use
