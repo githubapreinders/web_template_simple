@@ -57,26 +57,25 @@ gulp.task('copy_css',['compile_sass'], function()
  return gulp.src('app/*.html')
      .pipe(useref())
      .pipe(gulpIf('*.css' , cssnano()))
-     .pipe(gulp.dest('build'))
+     .pipe(gulp.dest('build'));
 });
 
+//*****************WATCH TASK**********************//
 
-
-gulp.task('watch',['browser_Sync', 'compile_sass','js_dev'], function()
+gulp.task('watch',['browser_Sync', 'compile_sass','checkJs'], function()
 {
     gulp.watch('app/scss/**/*.scss', ['compile_sass']);
     gulp.watch('app/**/*.html', browserSync.reload);
-    gulp.watch('app/js/**/controller.js', ['js_dev']);
+    gulp.watch('app/scripts/*.js', ['checkJs']);
 });
 
 gulp.task('checkJs',function()
 {
-    return gulp.src('app/js/controller.js')
+    return gulp.src('app/scripts/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter(stylish))
         .pipe(browserSync.stream());
 });
-
 
 gulp.task('browser_Sync',function()
 {
