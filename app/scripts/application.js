@@ -1,6 +1,6 @@
 (function()
 {
-    var app = angular.module('confab',['ui.router']);
+    var app = angular.module('confab',['ui.router','ngSanitize']);
 
 
 app.config(function ($stateProvider, $urlRouterProvider)

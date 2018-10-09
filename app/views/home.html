@@ -1,9 +1,15 @@
 
 <div ng-controller="IndexController">
 <h1  class="myheader" >{{vm.message}}</h1>
-<form ng-submit="vm.submitForm()">
-<input type="text" ng-model="vm.userInput">
-    <button type="submit">Submit</button>
+<form >
+	<input type="text" ng-model="vm.distortedText">
+    <button ng-click = "vm.submitForm()">Clear</button>
+    <button ng-click="vm.getLandingPage()">InsertHtml</button>
 </form>
-    <pre >{{vm.distortedText}}</pre>
+    <div >{{vm.distortedText}}</div>
+<br><br>
+<div >
+    <custom-directive></custom-directive>
+</div>
+
 </div>

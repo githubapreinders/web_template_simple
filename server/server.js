@@ -31,6 +31,7 @@
 	/**********************  API URLS **********************************/
 	app.get('/', function (req, res)
 	{
+		console.log('getting a root request...');
 		var filepath = path.join(__dirname,'./resources/landingpage.html');
 		fs.readFile(filepath, {encoding :'utf-8'}, function read(err, data)
 		{
